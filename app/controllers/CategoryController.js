@@ -103,7 +103,7 @@ define(['app', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app) {
 					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
 				});
 			};
-
+			
 		}]);
 });
 

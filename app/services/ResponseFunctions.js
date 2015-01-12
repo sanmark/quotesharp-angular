@@ -15,12 +15,17 @@ define(['app'], function (app) {
 					}
 					else
 					{
+						var list = "";
+						for (i in response.msg)
+						{
+							list += response.msg[i] + " | ";
+						}
+
 						var unsuccessful = {
 							alertHidden: false,
 							customAlert: 'alert-danger',
-							feedback: response.msg
+							feedback: list
 						};
-
 						return unsuccessful;
 					}
 

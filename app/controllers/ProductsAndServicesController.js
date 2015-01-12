@@ -53,11 +53,6 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 
 			$scope.saveNewProduct = function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent)
 			{
-				if (newProductCode == null || newProductName == null || newProductPrice == null, newProductParent == null)
-				{
-					return false;
-
-				}
 				QuotesharpAPI.productsAndServices.save(newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent)
 				.success(function (response, status) {
 					clearNewProductInputs();
