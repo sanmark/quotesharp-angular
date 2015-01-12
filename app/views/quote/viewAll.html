@@ -1,0 +1,37 @@
+<div class="row" ng-include src="'app/views/parts/navigation.html'">
+
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				View All Quotes<div class="pull-right search-field"><input placeholder="Search" class="form-control" type="text" data-ng-model="searchKey"></div>
+			</div>
+			<div class="panel-body">
+				<table class="table table-bordered table-hover">
+					<tr>
+						<th>ID</th>
+						<th>Printed Quote ID</th>
+						<th>Date</th>
+						<th>Customer Name</th>
+						<th>Customer Telephone</th>
+						<th>Customer Address</th>
+						<th></th>
+					</tr>
+					<tr data-ng-repeat="quote in quotes|filter:searchKey">
+						<td>{{quote.id}}</td>
+						<td>{{quote.printed_quote_id}}</td>
+						<td>{{quote.date}}</td>
+						<td>{{quote.customer_name}}</td>
+						<td>{{quote.customer_telephone}}</td>
+						<td>{{quote.customer_address}}</td>
+						<td>
+							<button data-ui-sref="quoteEdit({id:quote.id})" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
+							<button data-ng-click="deleteQuote(quote.id)" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,67 @@
+<div class="row" ng-include src="'app/views/parts/navigation.html'">
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Categories<div class="pull-right search-field"><input placeholder="Search" class="form-control" type="text" data-ng-model="searchKey"></div>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-sm-3">
+						<form>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									Add new Category
+								</div>
+								<div class="panel-body">
+									<div class="form-group">
+										<label for="categoryName">Category Name</label>
+										<input list="categoryNames" placeholder="Ex:- Parent/Child" class="form-control" id="categoryName" data-ng-model="newCategoryName" required/>
+										<datalist id="categoryNames">
+											<option data-ng-repeat="category in categories" value="{{category.name}}">
+										</datalist>
+									</div>
+									<div class="form-group">
+										<label for="parentCategory">Child Category of</label>
+										<select id="parentCategory" class="form-control" required data-ng-options="category.id as category.name for category in htmlCategories" data-ng-model="parentCategory">	
+											<option value="" selected="selected">-Select Category-</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="categoryDetails">Details</label>
+										<textarea id="categoryDetails" class="form-control" data-ng-model="newCategoryDetails">Enter here</textarea>
+									</div>
+									<button type="submit" class="btn btn-default" data-ng-click="saveNewCategory(newCategoryName, newCategoryDetails, parentCategory)">Add New</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-sm-9">
+						<table class="table table-bordered table-hover">
+							<tr>
+								<th>Name</th>
+								<th>Details</th>
+								<th>Parent Category</th>
+								<th></th>
+							</tr>
+							<tr data-ng-repeat="category in categories|filter:searchKey">
+								<td><input type="text" class="form-control"  data-ng-model="category.name" data-ng-disabled="!editEnable"/></td>
+								<td><textarea class="form-control" data-ng-model="category.details" data-ng-disabled="!editEnable"></textarea></td>
+								<td>
+									<select class="form-control" data-ng-options="category.id as category.name for category in htmlCategories" data-ng-model="category.parent_id" data-ng-disabled="!editEnable">
+									</select>
+								</td>
+								<td>
+									<button data-ng-click="editEnable = !editEnable" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
+									<button data-ng-click="deleteCategory(category.id, category.name)" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+								</td>
+							</tr>
+						</table>
+						<button data-ng-click="updateCategories()" class="btn btn-default">Update</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

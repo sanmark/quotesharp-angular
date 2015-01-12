@@ -1,17 +1,145 @@
-.home{
-	text-align: center;
+#quote-category-area,
+#quote-category-area ul,
+#quote-category-area li,
+#quote-category-area a {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+	font-weight: normal;
+	text-decoration: none;
+	line-height: 1;
+	font-size: 14px;
+	position: relative;
 }
-
-.home .AngularBeginLogo{
-	margin: auto;
+#quote-category-area a {
+	line-height: 1.3;
 }
-
-.home .logosArea{
-	margin: auto;
-	display: inline-block;
+#quote-category-area li
+{
+	position:relative;
+	padding-left: 15px;
+	margin-bottom: 10px;
 }
+#quote-category-area {
+	width: 950px;
+}
+#quote-category-area > ul > li > a {
+	padding-right: 40px;
+	font-size: 25px;
+	font-weight: bold;
+	display: block;
+	border-bottom: 1px solid #5e071b;
+	text-transform: uppercase;
+	position: relative;
+}
+#quote-category-area > ul > li > a > span {
+	padding: 10px;
+	display: block;
+	font-size: 13px;
+	font-weight: 300;
+}
+#quote-category-area > ul > li > a:hover {
+	text-decoration: none;
+}
+#quote-category-area > ul > li.active {
+	border-bottom: none;
+}
+#quote-category-area span.cnt {
+	position: absolute;
+	top: 8px;
+	right: 15px;
+	padding: 0;
+	margin: 0;
+	background: none;
+}
+#quote-category-area ul ul {
+	display: none;
+}
+#quote-category-area ul ul li {
+	border-top: 0;
+}
+#quote-category-area ul ul a {
+	padding: 10px;
+	display: block;
+	font-size: 13px;
+}
+/*================Navigation=================*/
 
-.home .logosArea .logo{
-	margin: 5px;
+.main-menu ul{
+	position: relative;
+	padding: 0;
+	margin: 0;
+}
+.main-menu ul li{
+	list-style: none;
+}
+.main-menu ul li:hover{
+	background-color:lightcoral;
+}
+.main-menu ul li a{
+	display: block;
+	color: #000;
+}
+.main-menu ul li a:hover{
+	text-decoration: none;
+}
+.main-menu>ul>li{
 	float: left;
+	position: relative;
+	line-height: 20px;
+	padding: 15px 20px;
+	margin: 0 2px;
+	display: block;
 }
+.main-menu>ul>li:hover>ul{
+	display: block;
+	background-color:lavenderblush;
+}
+.main-menu>ul>li>span{
+	font-size: 10px;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	margin-left: 3px;
+}
+.main-menu>ul>li>ul{
+	left: 0 !important;
+	top: 100% !important;
+}
+.main-menu>ul>li ul{
+	position: absolute;
+	display: none;
+	width: 200px;
+	top: 0;
+    left: 100%;
+    z-index: 50;
+}
+.main-menu>ul>li ul li{
+	position: relative;
+	padding: 15px;
+}
+.main-menu>ul>li ul li:hover>ul{
+	display: block;
+}
+.main-menu>ul>li ul li span{
+	font-size: 10px;
+	float: right;
+	margin-top: 4px;
+}
+/*============Normal styles============*/
+
+#quote-category-area .form-control
+{
+	display:inline-block !important;
+	width:150px !important;
+}
+#quote-category-area .name
+{
+	display: inline-block;
+	width: 200px;
+}
+.search-field
+{
+	margin-top: -6px;
+}
+
