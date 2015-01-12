@@ -1,7 +1,9 @@
 define(['angular'], function (angular) {
 	var app = angular.module('app', [
 		'ngRoute',
-		'ui.router'
+		'ui.router',
+		'ngResource',
+		'ngSanitize'
 	])
 	.config([
 		'$controllerProvider',

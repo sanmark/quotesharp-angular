@@ -1,0 +1,24 @@
+<div class="col-sm-12">
+	<div class="main-nav">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid main-menu">
+				<ul>
+					<li><a data-ui-sref="categories">Categories</a></li>
+					<li><a data-ui-sref="products-and-services">Products and Services</a></li>
+					<li>Quote
+						<ul>
+							<li><a data-ui-sref="quote-add">Add</a></li>
+							<li><a data-ui-sref="quote-view-all">View All</a></li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="navbar-right">
+					<li><a href="javascript:void(0)" data-ng-click="logout()">Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="alert" ng-class="responseAlert.customAlert" ng-hide="responseAlert.alertHidden">
+		{{responseAlert.feedback}}
+	</div>
+</div>
