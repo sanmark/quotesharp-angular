@@ -1,4 +1,4 @@
-define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function (app, $) {
+define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app, $) {
 	app
 	.controller('QuoteAddController', [
 		'$scope',
@@ -24,6 +24,9 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 			$scope.dateTime = getCurrentDate();
 			$scope.responseAlert = {};
 			$scope.responseAlert.alertHidden = true;
+
+			$scope.loggedUser = localStorage.username;
+			$scope.userOrganization = localStorage.organization;
 
 			$scope.logout = function () {
 				QuotesharpAPI.auth.logout()
@@ -161,7 +164,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 				}
 				else
 				{
-					$scope.responseAlert = ResponseFunctions.displayFeedback({msg:'Please enter quote data'},406);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({msg: 'Please enter quote data'}, 406);
 				}
 
 

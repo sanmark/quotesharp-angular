@@ -1,4 +1,4 @@
-define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function (app, $) {
+define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app, $) {
 	app
 	.controller('ProductsAndServicesController', [
 		'$scope',
@@ -14,12 +14,14 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 			if (!localStorage.authenticated) {
 				$location.path('/login');
 			}
-
 			getProductsAndServices();
 			getCategoriesForHtmlSelect();
 			$scope.responseAlert = {};
 			$scope.responseAlert.alertHidden = true;
 
+			$scope.loggedUser = localStorage.username;
+			$scope.userOrganization = localStorage.organization;
+		
 			$scope.logout = function () {
 				QuotesharpAPI.auth.logout()
 				.success(function () {
@@ -85,7 +87,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 				$scope.newProductParent = null;
 			}
 
-			$scope.deleteProduct = function (productId,productName)
+			$scope.deleteProduct = function (productId, productName)
 			{
 
 				var result = confirm('Deleting "' + productName + '" will delete this item from all quotes.\n\nAre you sure to delete "' + productName + '" ?');

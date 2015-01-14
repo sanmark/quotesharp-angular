@@ -27,12 +27,13 @@ define(['app', 'QuotesharpAPI'], function (app) {
 			};
 
 			$scope.login = function () {
-				QuotesharpAPI.auth.login($sanitize($scope.username), $sanitize($scope.password),$sanitize($scope.organization))
+				QuotesharpAPI.auth.login($sanitize($scope.username), $sanitize($scope.password), $sanitize($scope.organization))
 				.success(function (data) {
 					$location.path('/quote/add');
 					localStorage.authenticated = true;
 					localStorage.authToken = data.authToken;
-					localStorage.userId = data.userId;
+					localStorage.username = data.username;
+					localStorage.organization = data.organization;
 				})
 				.error(function (data) {
 					$scope.flash = data.msg;

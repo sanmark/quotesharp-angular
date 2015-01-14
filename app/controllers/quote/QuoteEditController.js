@@ -1,4 +1,4 @@
-define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function (app, $) {
+define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app, $) {
 	app
 	.controller('QuoteEditController', [
 		'$scope',
@@ -30,6 +30,9 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 			getCustomers();
 			$scope.responseAlert = {};
 			$scope.responseAlert.alertHidden = true;
+
+			$scope.loggedUser = localStorage.username;
+			$scope.userOrganization = localStorage.organization;
 
 			$scope.logout = function () {
 				QuotesharpAPI.auth.logout()
@@ -305,7 +308,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					console.log(response.msg);
 				});
 			}
-			
+
 		}]);
 });
 

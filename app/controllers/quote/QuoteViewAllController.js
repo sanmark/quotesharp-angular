@@ -19,6 +19,9 @@ define(['app', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app) {
 			$scope.responseAlert = {};
 			$scope.responseAlert.alertHidden = true;
 
+			$scope.loggedUser = localStorage.username;
+			$scope.userOrganization = localStorage.organization;
+
 			$scope.logout = function () {
 				QuotesharpAPI.auth.logout()
 				.success(function () {
