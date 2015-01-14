@@ -163,3 +163,10 @@
 {
 	margin-top: 30%;
 }
+.editButton
+{
+	position: absolute;
+	right: 42px;
+	top: 4px;
+	padding: 5px 5px 5px 5px;
+}

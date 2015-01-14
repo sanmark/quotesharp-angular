@@ -18,7 +18,7 @@ define(['app'], function (app) {
 						var list = "";
 						for (i in response.msg)
 						{
-							list += response.msg[i] + " | ";
+							list += response.msg[i]+' , ';
 						}
 
 						var unsuccessful = {

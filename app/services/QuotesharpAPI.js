@@ -65,12 +65,12 @@ define(['app'], function (app) {
 						}
 						);
 					},
-					updateCategories: function (categoriesData) {
+					updateCategory: function (categoryData) {
 						return $http.post(
 						apiUrlBase + 'categories/update-categories',
 						{
 							authToken: localStorage.authToken,
-							updateData: categoriesData
+							updateData: categoryData
 						}
 						);
 					},
