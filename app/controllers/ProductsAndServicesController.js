@@ -37,7 +37,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					$scope.productsAndServices = response.data;
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 
@@ -47,7 +47,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					$scope.htmlCategories = response.data;
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 

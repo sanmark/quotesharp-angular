@@ -36,7 +36,7 @@ define(['app', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app) {
 					$scope.quotes = response.data;
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 

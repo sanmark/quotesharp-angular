@@ -67,7 +67,7 @@ define(['app', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app) {
 					$scope.categories = response.data;
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 			function getCategoriesForHtmlSelect() {
@@ -76,7 +76,7 @@ define(['app', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app) {
 					$scope.htmlCategories = response.data;
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 

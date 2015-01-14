@@ -70,7 +70,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					getProductsAndServicesForQuote();
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 			function getProductsAndServicesForQuote() {
@@ -117,7 +117,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					});
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 
@@ -245,7 +245,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					$scope.customersList = response.data;
 				})
 				.error(function (response, status) {
-					displayFeedback(response, status);
+					console.log(response, status);
 				});
 			}
 
