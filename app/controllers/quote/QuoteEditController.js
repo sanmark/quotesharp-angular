@@ -50,7 +50,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					$scope.productsInQuote = response.data;
 				})
 				.error(function (response) {
-					console.log(response.msg);
+
 				});
 			}
 
@@ -66,7 +66,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					$scope.dateTime = $scope.basicDetails['date'];
 				})
 				.error(function (response) {
-					console.log(response.msg);
+
 				});
 			}
 
@@ -108,7 +108,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					getProductsAndServicesForQuote();
 				})
 				.error(function (response) {
-					console.log(response.msg);
+
 				});
 			}
 			function getProductsAndServicesForQuote() {
@@ -182,7 +182,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					});
 				})
 				.error(function (response) {
-					console.log(response.msg);
+
 				});
 			}
 
@@ -208,33 +208,23 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 
 			$scope.updateQuote = function ()
 			{
-				var editQuoteId = $stateParams.id;
-				var quoteData = $scope.quoteData;
-				var quoteDataIds = $scope.quoteProductsIds;
 				var sendData = new Object();
-				for (i in quoteDataIds)
+				for (i in $scope.quoteProductsIds)
 				{
-					if (quoteData['quantity_' + quoteDataIds[i]] !== "")
+					if ($scope.quoteData['quantity_' + $scope.quoteProductsIds[i]] !== "")
 					{
-						sendData[quoteDataIds[i]] = {
-							'id': quoteDataIds[i],
-							'price': quoteData['price_' + quoteDataIds[i]],
-							'quantity': quoteData['quantity_' + quoteDataIds[i]]
+						sendData[$scope.quoteProductsIds[i]] = {
+							'id': $scope.quoteProductsIds[i],
+							'price': $scope.quoteData['price_' + $scope.quoteProductsIds[i]],
+							'quantity': $scope.quoteData['quantity_' + $scope.quoteProductsIds[i]]
 						};
 					}
 				}
-
-				var customerName = $scope.customerName;
-				var customerTelephone = $scope.customerTelephone;
-				var customerAddress = $scope.customerAddress;
-				var printedId = $scope.quoteId;
-				var dateTime = $scope.dateTime;
-
 				var result = validateEditQuoteOnUpdate(sendData);
 
 				if (result)
 				{
-					QuotesharpAPI.quote.update(editQuoteId, sendData, customerName, customerTelephone, customerAddress, printedId, dateTime)
+					QuotesharpAPI.quote.update($stateParams.id, sendData, $scope.customerName, $scope.customerTelephone, $scope.customerAddress, $scope.quoteId, $scope.dateTime)
 					.success(function (response, status) {
 						$state.transitionTo('quote-view-all');
 						displayFeedback(response, status);
@@ -245,7 +235,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 				}
 				else
 				{
-					$scope.responseAlert = ResponseFunctions.displayFeedback({msg: 'Quote is empty,please add data'}, 406);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Quote is empty,please add data or delete quote"]}, 406);
 				}
 
 
@@ -305,7 +295,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					$scope.customersList = response.data;
 				})
 				.error(function (response, status) {
-					console.log(response.msg);
+					
 				});
 			}
 

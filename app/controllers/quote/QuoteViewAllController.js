@@ -39,18 +39,18 @@ define(['app', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app) {
 					$scope.quotes = response.data;
 				})
 				.error(function (response) {
-					console.log(response.msg);
+
 				});
 			}
 
 			$scope.deleteQuote = function (quoteId) {
 				QuotesharpAPI.quote.deleteQuote(quoteId)
 				.success(function (response, status) {
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Quote deleted successfully"]}, status);
 					getQuotes();
 				})
 				.error(function (response, status) {
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Failed to delete quote"]}, status);
 				});
 			};
 

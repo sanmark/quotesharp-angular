@@ -73,7 +73,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					getProductsAndServicesForQuote();
 				})
 				.error(function (response) {
-					console.log(response.msg);
+
 				});
 			}
 			function getProductsAndServicesForQuote() {
@@ -120,7 +120,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					});
 				})
 				.error(function (response) {
-					console.log(response.msg);
+
 				});
 			}
 
@@ -129,45 +129,34 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 
 			$scope.saveQuote = function ()
 			{
-				var quoteData = $scope.quoteData;
-				var quoteDataIds = $scope.quoteProductsIds;
 				var sendData = new Object();
-				for (i in quoteDataIds)
+				for (i in $scope.quoteProductsIds)
 				{
-					if (quoteData.hasOwnProperty('quantity_' + quoteDataIds[i]))
+					if ($scope.quoteData.hasOwnProperty('quantity_' + $scope.quoteProductsIds[i]))
 					{
-						sendData[quoteDataIds[i]] = {
-							'id': quoteDataIds[i],
-							'price': quoteData['price_' + quoteDataIds[i]],
-							'quantity': quoteData['quantity_' + quoteDataIds[i]]
+						sendData[$scope.quoteProductsIds[i]] = {
+							'id': $scope.quoteProductsIds[i],
+							'price': $scope.quoteData['price_' + $scope.quoteProductsIds[i]],
+							'quantity': $scope.quoteData['quantity_' + $scope.quoteProductsIds[i]]
 						};
 					}
 				}
-				var customerName = $scope.customerName;
-				var customerTelephone = $scope.customerTelephone;
-				var customerAddress = $scope.customerAddress;
-				var printedId = $scope.quoteId;
-				var dateTime = $scope.dateTime;
-
-				var result = validateAddQuoteOnUpdate(sendData);
+				var result = validateAddQuoteOnSave(sendData);
 
 				if (result)
 				{
-					QuotesharpAPI.quote.save(sendData, customerName, customerTelephone, customerAddress, printedId, dateTime)
+					QuotesharpAPI.quote.save(sendData, $scope.customerName, $scope.customerTelephone, $scope.customerAddress,$scope.quoteId,$scope.dateTime)
 					.success(function (response, status) {
-						clearQuoteInputs();
 						$state.transitionTo('quote-view-all');
 					})
 					.error(function (response, status) {
-						$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+						$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Failed to save quote"]}, status);
 					});
 				}
 				else
 				{
-					$scope.responseAlert = ResponseFunctions.displayFeedback({msg: 'Please enter quote data'}, 406);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Please enter quote data"]}, 406);
 				}
-
-
 			};
 
 			function designQuoteView()
@@ -202,16 +191,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 
 			}
 
-			function clearQuoteInputs()
-			{
-				$scope.customerName = null;
-				$scope.customerTelephone = null;
-				$scope.customerAddress = null;
-				$scope.quoteId = null;
-				$scope.sendData = null;
-			}
-
-			function validateAddQuoteOnUpdate(sendData)
+			function validateAddQuoteOnSave(sendData)
 			{
 
 				if (Object.getOwnPropertyNames(sendData).length === 0)
@@ -248,7 +228,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					$scope.customersList = response.data;
 				})
 				.error(function (response, status) {
-					console.log(response, status);
+
 				});
 			}
 

@@ -5,7 +5,7 @@ define(['app'], function (app) {
 		function (
 		$http
 		) {
-			apiUrlBase = 'http://api-quotesharp.sapps.io/';
+			apiUrlBase = 'http://api.quotesharp.loc/';
 
 			return {
 				auth: {
