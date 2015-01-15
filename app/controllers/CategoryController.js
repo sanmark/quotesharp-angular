@@ -46,14 +46,14 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 
 						if (typeof category['parent_cats'][cat_id] === 'undefined')
 						{
-							html += "<li id='row_" + category['categories'][cat_id]['id'] + "'><a href='javascript:void(0)'><span>" + category['categories'][cat_id]['name'] + "</span></a><button class='editButton' data-toggle='modal' data-target='#myModal_" + category['categories'][cat_id]['id'] + "'><span class='glyphicon glyphicon-pencil'></span></button></li>";
+							html += "<li id='row_" + category['categories'][cat_id]['id'] + "'><a href='javascript:void(0)'><span>" + category['categories'][cat_id]['name'] + "</span></a><button class='editButton btn btn-warning' data-toggle='modal' data-target='#myModal_" + category['categories'][cat_id]['id'] + "'>Edit</button></li>";
 						}
 
 						if (typeof category['parent_cats'][cat_id] !== 'undefined')
 						{
 							html += "<li id='row_" + category['categories'][cat_id]['id'] + "'><a href='javascript:void(0)'><span>" + category['categories'][cat_id]['name'] + "</span></a>";
 							html += buildCategory(cat_id, category);
-							html += "<button class='editButton' data-toggle='modal' data-target='#myModal_" + category['categories'][cat_id]['id'] + "'><span class='glyphicon glyphicon-pencil'></span></button></li>";
+							html += "<button class='editButton btn btn-warning' data-toggle='modal' data-target='#myModal_" + category['categories'][cat_id]['id'] + "'>Edit</button></li>";
 						}
 					}
 					html += "</ul>";

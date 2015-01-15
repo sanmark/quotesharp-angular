@@ -170,3 +170,11 @@
 	top: 4px;
 	padding: 5px 5px 5px 5px;
 }
+.modal-dialog
+{
+	width: 400px;
+}
+.panel-default
+{
+	min-height: 490px;
+}

@@ -21,7 +21,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 
 			$scope.loggedUser = localStorage.username;
 			$scope.userOrganization = localStorage.organization;
-		
+
 			$scope.logout = function () {
 				QuotesharpAPI.auth.logout()
 				.success(function () {
@@ -53,9 +53,9 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 				});
 			}
 
-			$scope.saveNewProduct = function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent)
+			$scope.saveNewProduct = function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent,newProductStatus)
 			{
-				QuotesharpAPI.productsAndServices.save(newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent)
+				QuotesharpAPI.productsAndServices.save(newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent,newProductStatus)
 				.success(function (response, status) {
 					clearNewProductInputs();
 					getCategoriesForHtmlSelect();
@@ -67,9 +67,9 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 				});
 			};
 
-			$scope.update = function () {
-				var updateData = $scope.productsAndServices;
-				QuotesharpAPI.productsAndServices.update(updateData)
+			$scope.updateProduct = function (productData) {
+				
+				QuotesharpAPI.productsAndServices.update(productData)
 				.success(function (response, status) {
 					getProductsAndServices();
 					getCategoriesForHtmlSelect();
@@ -85,17 +85,11 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 				$scope.newProductPrice = null;
 				$scope.newProductDetails = null;
 				$scope.newProductParent = null;
+				$scope.newProductStatus= null;
 			}
 
-			$scope.deleteProduct = function (productId, productName)
+			$scope.deleteProduct = function (productId)
 			{
-
-				var result = confirm('Deleting "' + productName + '" will delete this item from all quotes.\n\nAre you sure to delete "' + productName + '" ?');
-				if (result === false)
-				{
-					return false;
-				}
-
 				QuotesharpAPI.productsAndServices.deleteProductOrService(productId)
 				.success(function (response, status) {
 					getProductsAndServices();

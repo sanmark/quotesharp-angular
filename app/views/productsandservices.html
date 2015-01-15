@@ -38,7 +38,11 @@
 											<option value="" selected="selected"> Select category </option>
 										</select>
 									</div>
-									<button class="btn btn-default" type="submit" data-ng-click="saveNewProduct(newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent)">Add New</button>
+									<div class="form-group">
+										<label for="is_active">Is Active</label>
+										<input type="checkbox" id="is_active" required data-ng-model="newProductStatus" data-ng-value="true"/>
+									</div>
+									<button class="btn btn-primary" type="submit" data-ng-click="saveNewProduct(newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent,newProductStatus)">Add New</button>
 								</form>
 							</div>
 						</div>
@@ -51,26 +55,19 @@
 										<th>Code</th>
 										<th>Name</th>
 										<th>Price</th>
-										<th>Details</th>
-										<th>Parent</th>
+										<th>Status</th>
 										<th></th>
 									</tr>
 									<tr data-ng-repeat="productAndService in productsAndServices|filter:searchKey">
-										<td><input type="text" class="form-control"  data-ng-model="productAndService.code" data-ng-disabled="!editEnable"/></td>
-										<td><input type="text" class="form-control"  data-ng-model="productAndService.name" data-ng-disabled="!editEnable"/></td>
-										<td><input type="text" class="form-control"  data-ng-model="productAndService.price" data-ng-disabled="!editEnable"/></td>
-										<td><textarea class="form-control" data-ng-model="productAndService.details" data-ng-disabled="!editEnable"></textarea></td>
-										<td>
-											<select class="form-control" data-ng-options="category.id as category.name for category in htmlCategories" data-ng-model="productAndService.parent_id" data-ng-disabled="!editEnable">
-											</select>
-										</td>
+										<td>{{productAndService.code}}</td>
+										<td>{{productAndService.name}}</td>
+										<td>{{productAndService.price}}</td>
+										<td>{{productAndService.is_active==='1'?'Active':'Not Active'}}</td>
 										<td style="width: 105px;">
-											<button class="btn btn-default" data-ng-click="editEnable = !editEnable"><span class="glyphicon glyphicon-pencil"></span></button>
-											<button class="btn btn-default" data-ng-click="deleteProduct(productAndService.id, productAndService.name)"><span class="glyphicon glyphicon-trash"></span></button>
+											<button class="btn btn-warning"  data-toggle="modal" data-target="#myModal_{{productAndService.id}}">Edit</button>
 										</td>
 									</tr>
 								</table>
-								<button class="btn btn-default" data-ng-click="update()">Update</button>
 							</div>
 						</div>
 					</div>
@@ -80,3 +77,48 @@
 	</div>
 </div>
 <div class="row" ng-include src="'app/views/parts/footer.html'"></div>
+
+
+<div data-ng-repeat="productAndService in productsAndServices" class="modal fade" id="myModal_{{productAndService.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Edit Product or Service</h4>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="categoryName">Code</label>
+						<input type="text" class="form-control" data-ng-model="productAndService.code" required/>
+					</div>
+					<div class="form-group">
+						<label for="categoryName">Name</label>
+						<input type="text" class="form-control" data-ng-model="productAndService.name" required/>
+					</div>
+					<div class="form-group">
+						<label for="categoryName">Price</label>
+						<input type="text" class="form-control" data-ng-model="productAndService.price" required/>
+					</div>
+					<div class="form-group">
+						<label for="parentCategory">Category</label>
+						<select id="parentCategory" class="form-control" required data-ng-options="category.id as category.name for category in htmlCategories" data-ng-model="productAndService.parent_id">	
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="categoryDetails">Details</label>
+						<textarea id="categoryDetails" class="form-control" data-ng-model="productAndService.details">Enter here</textarea>
+					</div>
+					<div class="form-group">
+						<label for="categoryStatus">Is Active</label>
+						<input type="checkbox" id="categoryStatus" required data-ng-checked="productAndService.is_active==='1'" data-ng-model="productAndService.is_active"/>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" data-ng-click="updateProduct(productAndService)" class="btn btn-primary" data-dismiss="modal">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

@@ -26,8 +26,8 @@
 						<td>{{quote.customer_telephone}}</td>
 						<td>{{quote.customer_address}}</td>
 						<td>
-							<button data-ui-sref="quoteEdit({id:quote.id})" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
-							<button data-ng-click="deleteQuote(quote.id)" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+							<button data-ui-sref="quoteEdit({id:quote.id})" class="btn btn-warning">Edit</button>
+							<button data-toggle="modal" data-target="#prompt_{{quote.id}}" class="btn btn-danger">Delete</button>
 
 					</tr>
 				</table>
@@ -36,3 +36,20 @@
 	</div>
 </div>
 <div class="row" ng-include src="'app/views/parts/footer.html'"></div>
+
+<div data-ng-repeat="quotePrompt in quotes" class="modal fade" id="prompt_{{quotePrompt.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Are you sure to delete this quote?</h4>
+			</div>
+			<form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" data-ng-click="deleteQuote(quotePrompt.id)" class="btn btn-danger" data-dismiss="modal">Delete</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

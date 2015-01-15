@@ -5,7 +5,7 @@ define(['app'], function (app) {
 		function (
 		$http
 		) {
-			apiUrlBase = 'http://api.quotesharp.loc/';
+			apiUrlBase = 'http://api-quotesharp.sapps.io/';
 
 			return {
 				auth: {
@@ -168,7 +168,15 @@ define(['app'], function (app) {
 						}
 						);
 					},
-					save: function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent) {
+					getActiveProductsAndServices: function () {
+						return $http.post(
+						apiUrlBase + 'products-and-services/get-active-products-and-services',
+						{
+							authToken: localStorage.authToken,
+						}
+						);
+					},
+					save: function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent, newProductStatus) {
 						return $http.post(
 						apiUrlBase + 'products-and-services/save',
 						{
@@ -177,7 +185,8 @@ define(['app'], function (app) {
 							productName: newProductName,
 							productPrice: newProductPrice,
 							productDetails: newProductDetails,
-							productParent: newProductParent
+							productParent: newProductParent,
+							productStatus: newProductStatus
 						}
 						);
 					},

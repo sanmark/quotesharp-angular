@@ -44,13 +44,6 @@ define(['app', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app) {
 			}
 
 			$scope.deleteQuote = function (quoteId) {
-
-				var result = confirm('Are you sure to delete this quote ?');
-				if (result === false)
-				{
-					return false;
-				}
-
 				QuotesharpAPI.quote.deleteQuote(quoteId)
 				.success(function (response, status) {
 					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
