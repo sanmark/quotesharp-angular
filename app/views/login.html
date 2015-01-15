@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-sm-4 col-sm-offset-4">
-		<div class="panel panel-default">
+		<div class="panel panel-default login-input">
 			<div class="panel-heading">
 				Login
 			</div>
@@ -8,7 +8,7 @@
 				<div class="alert-warning" data-ng-show="flash" data-ng-bind="flash"></div>
 				<form data-ng-submit="login()">
 					<label for="organization">Organization</label>
-					<input class="form-control" type="text" id="organization" data-ng-model="organization"/><br>
+					<input class="form-control" type="text" id="organization" data-ng-model="organization" required/><br>
 					<label for="username">Username</label>
 					<input class="form-control" type="text" id="username" data-ng-model="username" required/><br>
 					<label for="password">Password</label>

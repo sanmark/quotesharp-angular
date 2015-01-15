@@ -1,4 +1,4 @@
-define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function (app, $) {
+define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app, $) {
 	app
 	.controller('ProductsAndServicesController', [
 		'$scope',
@@ -14,11 +14,13 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 			if (!localStorage.authenticated) {
 				$location.path('/login');
 			}
-
 			getProductsAndServices();
 			getCategoriesForHtmlSelect();
 			$scope.responseAlert = {};
 			$scope.responseAlert.alertHidden = true;
+
+			$scope.loggedUser = localStorage.username;
+			$scope.userOrganization = localStorage.organization;
 
 			$scope.logout = function () {
 				QuotesharpAPI.auth.logout()
@@ -37,7 +39,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					$scope.productsAndServices = response.data;
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 
@@ -47,13 +49,13 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					$scope.htmlCategories = response.data;
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 
-			$scope.saveNewProduct = function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent)
+			$scope.saveNewProduct = function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent,newProductStatus)
 			{
-				QuotesharpAPI.productsAndServices.save(newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent)
+				QuotesharpAPI.productsAndServices.save(newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent,newProductStatus)
 				.success(function (response, status) {
 					clearNewProductInputs();
 					getCategoriesForHtmlSelect();
@@ -65,9 +67,9 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 				});
 			};
 
-			$scope.update = function () {
-				var updateData = $scope.productsAndServices;
-				QuotesharpAPI.productsAndServices.update(updateData)
+			$scope.updateProduct = function (productData) {
+				
+				QuotesharpAPI.productsAndServices.update(productData)
 				.success(function (response, status) {
 					getProductsAndServices();
 					getCategoriesForHtmlSelect();
@@ -83,17 +85,11 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 				$scope.newProductPrice = null;
 				$scope.newProductDetails = null;
 				$scope.newProductParent = null;
+				$scope.newProductStatus= null;
 			}
 
-			$scope.deleteProduct = function (productId,productName)
+			$scope.deleteProduct = function (productId)
 			{
-
-				var result = confirm('Deleting "' + productName + '" will delete this item from all quotes.\n\nAre you sure to delete "' + productName + '" ?');
-				if (result === false)
-				{
-					return false;
-				}
-
 				QuotesharpAPI.productsAndServices.deleteProductOrService(productId)
 				.success(function (response, status) {
 					getProductsAndServices();

@@ -77,6 +77,7 @@
 .main-menu ul li:hover{
 	background-color:lightcoral;
 }
+
 .main-menu ul li a{
 	display: block;
 	color: #000;
@@ -142,4 +143,38 @@
 {
 	margin-top: -6px;
 }
-
+#fullTotal
+{
+	color: black;
+	font-size: x-large;
+	font-weight: 900;
+}
+.footer
+{
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+#logged-user:hover
+{
+	background-color:transparent;
+}
+.login-input
+{
+	margin-top: 30%;
+}
+.editButton
+{
+	position: absolute;
+	right: 42px;
+	top: 4px;
+	padding: 5px 5px 5px 5px;
+}
+.modal-dialog
+{
+	width: 400px;
+}
+.panel-default
+{
+	min-height: 490px;
+}

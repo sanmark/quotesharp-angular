@@ -1,4 +1,4 @@
-define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function (app, $) {
+define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app, $) {
 	app
 	.controller('QuoteAddController', [
 		'$scope',
@@ -24,6 +24,9 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 			$scope.dateTime = getCurrentDate();
 			$scope.responseAlert = {};
 			$scope.responseAlert.alertHidden = true;
+
+			$scope.loggedUser = localStorage.username;
+			$scope.userOrganization = localStorage.organization;
 
 			$scope.logout = function () {
 				QuotesharpAPI.auth.logout()
@@ -70,11 +73,11 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					getProductsAndServicesForQuote();
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 			function getProductsAndServicesForQuote() {
-				QuotesharpAPI.productsAndServices.get()
+				QuotesharpAPI.productsAndServices.getActiveProductsAndServices()
 				.success(function (response) {
 					$scope.quoteProductsAndServices = response.data;
 					var productsAndServices = $scope.quoteProductsAndServices;
@@ -117,7 +120,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					});
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 
@@ -161,7 +164,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 				}
 				else
 				{
-					$scope.responseAlert = ResponseFunctions.displayFeedback({msg:'Please enter quote data'},406);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({msg: 'Please enter quote data'}, 406);
 				}
 
 
@@ -245,7 +248,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					$scope.customersList = response.data;
 				})
 				.error(function (response, status) {
-					displayFeedback(response, status);
+					console.log(response, status);
 				});
 			}
 

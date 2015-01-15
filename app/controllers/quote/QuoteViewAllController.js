@@ -19,6 +19,9 @@ define(['app', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app) {
 			$scope.responseAlert = {};
 			$scope.responseAlert.alertHidden = true;
 
+			$scope.loggedUser = localStorage.username;
+			$scope.userOrganization = localStorage.organization;
+
 			$scope.logout = function () {
 				QuotesharpAPI.auth.logout()
 				.success(function () {
@@ -36,18 +39,11 @@ define(['app', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app) {
 					$scope.quotes = response.data;
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 
 			$scope.deleteQuote = function (quoteId) {
-
-				var result = confirm('Are you sure to delete this quote ?');
-				if (result === false)
-				{
-					return false;
-				}
-
 				QuotesharpAPI.quote.deleteQuote(quoteId)
 				.success(function (response, status) {
 					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);

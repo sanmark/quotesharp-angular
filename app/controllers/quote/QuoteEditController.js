@@ -1,4 +1,4 @@
-define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function (app, $) {
+define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app, $) {
 	app
 	.controller('QuoteEditController', [
 		'$scope',
@@ -31,6 +31,9 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 			$scope.responseAlert = {};
 			$scope.responseAlert.alertHidden = true;
 
+			$scope.loggedUser = localStorage.username;
+			$scope.userOrganization = localStorage.organization;
+
 			$scope.logout = function () {
 				QuotesharpAPI.auth.logout()
 				.success(function () {
@@ -47,7 +50,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					$scope.productsInQuote = response.data;
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 
@@ -63,7 +66,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					$scope.dateTime = $scope.basicDetails['date'];
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 
@@ -105,7 +108,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					getProductsAndServicesForQuote();
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 			function getProductsAndServicesForQuote() {
@@ -179,7 +182,7 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					});
 				})
 				.error(function (response) {
-					alert(response.msg);
+					console.log(response.msg);
 				});
 			}
 
@@ -302,10 +305,10 @@ define(['app', 'jquery', 'QuotesharpAPI','services/ResponseFunctions'], function
 					$scope.customersList = response.data;
 				})
 				.error(function (response, status) {
-					displayFeedback(response, status);
+					console.log(response.msg);
 				});
 			}
-			
+
 		}]);
 });
 

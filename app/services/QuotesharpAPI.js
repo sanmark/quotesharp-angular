@@ -65,12 +65,12 @@ define(['app'], function (app) {
 						}
 						);
 					},
-					updateCategories: function (categoriesData) {
+					updateCategory: function (categoryData) {
 						return $http.post(
 						apiUrlBase + 'categories/update-categories',
 						{
 							authToken: localStorage.authToken,
-							updateData: categoriesData
+							updateData: categoryData
 						}
 						);
 					},
@@ -168,7 +168,15 @@ define(['app'], function (app) {
 						}
 						);
 					},
-					save: function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent) {
+					getActiveProductsAndServices: function () {
+						return $http.post(
+						apiUrlBase + 'products-and-services/get-active-products-and-services',
+						{
+							authToken: localStorage.authToken,
+						}
+						);
+					},
+					save: function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent, newProductStatus) {
 						return $http.post(
 						apiUrlBase + 'products-and-services/save',
 						{
@@ -177,7 +185,8 @@ define(['app'], function (app) {
 							productName: newProductName,
 							productPrice: newProductPrice,
 							productDetails: newProductDetails,
-							productParent: newProductParent
+							productParent: newProductParent,
+							productStatus: newProductStatus
 						}
 						);
 					},
