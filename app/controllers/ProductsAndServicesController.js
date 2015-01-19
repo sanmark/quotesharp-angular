@@ -34,12 +34,12 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 
 			function getProductsAndServices()
 			{
-				QuotesharpAPI.productsAndServices.get()
+				QuotesharpAPI.productsAndServices.getAllProductsAndServices()
 				.success(function (response) {
 					$scope.productsAndServices = response.data;
 				})
 				.error(function (response) {
-					console.log(response.msg);
+
 				});
 			}
 
@@ -49,34 +49,41 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					$scope.htmlCategories = response.data;
 				})
 				.error(function (response) {
-					console.log(response.msg);
+
 				});
 			}
 
-			$scope.saveNewProduct = function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent,newProductStatus)
+			$scope.saveNewProduct = function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent, newProductStatus)
 			{
-				QuotesharpAPI.productsAndServices.save(newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent,newProductStatus)
+				if (newProductCode === undefined || newProductName === undefined || newProductPrice === undefined || newProductParent === undefined)
+				{
+					return false;
+				}
+				QuotesharpAPI.productsAndServices.saveNewProductOrService(newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent, newProductStatus)
 				.success(function (response, status) {
 					clearNewProductInputs();
 					getCategoriesForHtmlSelect();
 					getProductsAndServices();
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": [newProductName + " Saved Successfully"]}, status);
 				})
 				.error(function (response, status) {
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Failed to save " + newProductName + ""]}, status);
 				});
 			};
 
 			$scope.updateProduct = function (productData) {
-				
-				QuotesharpAPI.productsAndServices.update(productData)
+				if (productData.code === undefined || productData.name === undefined || productData.price === undefined || productData.parent_id === undefined)
+				{
+					return false;
+				}
+				QuotesharpAPI.productsAndServices.updateProductOrService(productData)
 				.success(function (response, status) {
 					getProductsAndServices();
 					getCategoriesForHtmlSelect();
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["'" + productData.name + "' Updated Successfully"]}, status);
 				})
 				.error(function (response, status) {
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Failed to update '" + productData.name + "'"]}, status);
 				});
 			};
 			function clearNewProductInputs() {
@@ -85,21 +92,8 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 				$scope.newProductPrice = null;
 				$scope.newProductDetails = null;
 				$scope.newProductParent = null;
-				$scope.newProductStatus= null;
+				$scope.newProductStatus = null;
 			}
-
-			$scope.deleteProduct = function (productId)
-			{
-				QuotesharpAPI.productsAndServices.deleteProductOrService(productId)
-				.success(function (response, status) {
-					getProductsAndServices();
-					getCategoriesForHtmlSelect();
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
-				})
-				.error(function (response, status) {
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
-				});
-			};
 		}]);
 });
 

@@ -1,4 +1,4 @@
-define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app, $) {
+define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'services/TreeViewFunctions'], function (app, $) {
 	app
 	.controller('QuoteAddController', [
 		'$scope',
@@ -7,13 +7,15 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 		'$compile',
 		'QuotesharpAPI',
 		'ResponseFunctions',
+		'TreeViewFunctions',
 		function (
 		$scope,
 		$state,
 		$location,
 		$compile,
 		QuotesharpAPI,
-		ResponseFunctions
+		ResponseFunctions,
+		TreeViewFunctions
 		) {
 			if (!localStorage.authenticated) {
 				$location.path('/login');
@@ -36,44 +38,17 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 				});
 			};
 
-			function buildCategory(parent, category)
-			{
-				var html = "";
-				if (typeof category['parent_cats'][parent] !== 'undefined')
-				{
-					html += "<ul>";
-					for (key in category['parent_cats'][parent])
-					{
-						var cat_id = category['parent_cats'][parent][key];
-
-						if (typeof category['parent_cats'][cat_id] === 'undefined')
-						{
-							html += "<li id='row_" + category['categories'][cat_id]['id'] + "'><a href='javascript:void(0)'><span>" + category['categories'][cat_id]['name'] + "</span></a></li>";
-						}
-
-						if (typeof category['parent_cats'][cat_id] !== 'undefined')
-						{
-							html += "<li id='row_" + category['categories'][cat_id]['id'] + "'><a href='javascript:void(0)'><span>" + category['categories'][cat_id]['name'] + "</span></a>";
-							html += buildCategory(cat_id, category);
-							html += "</li>";
-						}
-					}
-					html += "</ul>";
-				}
-				return html;
-			}
-
 			function getCategoriesForQuote() {
-				QuotesharpAPI.categories.getCategoriesForQuote()
+				QuotesharpAPI.categories.getCategoriesForTreeView()
 				.success(function (response) {
 					$scope.quoteCategories = response.data;
-					var appendData = buildCategory(0, $scope.quoteCategories);
+					var appendData = TreeViewFunctions.buildTreeView(0, $scope.quoteCategories);
 					$('#quote-category-area').append(appendData);
-					designQuoteView();
+					TreeViewFunctions.designTreeView();
 					getProductsAndServicesForQuote();
 				})
 				.error(function (response) {
-					console.log(response.msg);
+
 				});
 			}
 			function getProductsAndServicesForQuote() {
@@ -120,7 +95,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					});
 				})
 				.error(function (response) {
-					console.log(response.msg);
+
 				});
 			}
 
@@ -129,89 +104,37 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 
 			$scope.saveQuote = function ()
 			{
-				var quoteData = $scope.quoteData;
-				var quoteDataIds = $scope.quoteProductsIds;
 				var sendData = new Object();
-				for (i in quoteDataIds)
+				for (i in $scope.quoteProductsIds)
 				{
-					if (quoteData.hasOwnProperty('quantity_' + quoteDataIds[i]))
+					if ($scope.quoteData.hasOwnProperty('quantity_' + $scope.quoteProductsIds[i]))
 					{
-						sendData[quoteDataIds[i]] = {
-							'id': quoteDataIds[i],
-							'price': quoteData['price_' + quoteDataIds[i]],
-							'quantity': quoteData['quantity_' + quoteDataIds[i]]
+						sendData[$scope.quoteProductsIds[i]] = {
+							'id': $scope.quoteProductsIds[i],
+							'price': $scope.quoteData['price_' + $scope.quoteProductsIds[i]],
+							'quantity': $scope.quoteData['quantity_' + $scope.quoteProductsIds[i]]
 						};
 					}
 				}
-				var customerName = $scope.customerName;
-				var customerTelephone = $scope.customerTelephone;
-				var customerAddress = $scope.customerAddress;
-				var printedId = $scope.quoteId;
-				var dateTime = $scope.dateTime;
-
-				var result = validateAddQuoteOnUpdate(sendData);
+				var result = validateAddQuoteOnSave(sendData);
 
 				if (result)
 				{
-					QuotesharpAPI.quote.save(sendData, customerName, customerTelephone, customerAddress, printedId, dateTime)
+					QuotesharpAPI.quote.saveQuote(sendData, $scope.customerName, $scope.customerTelephone, $scope.customerAddress, $scope.quoteId, $scope.dateTime)
 					.success(function (response, status) {
-						clearQuoteInputs();
 						$state.transitionTo('quote-view-all');
 					})
 					.error(function (response, status) {
-						$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+						$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Failed to save quote"]}, status);
 					});
 				}
 				else
 				{
-					$scope.responseAlert = ResponseFunctions.displayFeedback({msg: 'Please enter quote data'}, 406);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Please enter quote data"]}, 406);
 				}
-
-
 			};
 
-			function designQuoteView()
-			{
-				$('#quote-category-area > ul > li ul').each(function (index, element) {
-					var content = '<span class="cnt glyphicon glyphicon-hand-down"></span>';
-					$(element).closest('li').children('a').append(content);
-				});
-
-				$('#quote-category-area > ul>li a').click(function () {
-
-					var checkElement = $(this).next();
-
-					$('#quote-category-area li').removeClass('active');
-					$(this).closest('li').addClass('active');
-
-					if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
-						$(this).closest('li').removeClass('active');
-						checkElement.slideUp('normal');
-					}
-					if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-						checkElement.slideDown('normal');
-					}
-
-					if ($(this).closest('li').find('ul').children().length === 0) {
-						return true;
-					} else {
-						return false;
-					}
-
-				});
-
-			}
-
-			function clearQuoteInputs()
-			{
-				$scope.customerName = null;
-				$scope.customerTelephone = null;
-				$scope.customerAddress = null;
-				$scope.quoteId = null;
-				$scope.sendData = null;
-			}
-
-			function validateAddQuoteOnUpdate(sendData)
+			function validateAddQuoteOnSave(sendData)
 			{
 
 				if (Object.getOwnPropertyNames(sendData).length === 0)
@@ -248,7 +171,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					$scope.customersList = response.data;
 				})
 				.error(function (response, status) {
-					console.log(response, status);
+
 				});
 			}
 

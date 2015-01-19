@@ -6,10 +6,16 @@ define(['app'], function (app) {
 				displayFeedback: function (response, status) {
 					if (status === 200)
 					{
+						var list = "";
+						for (i in response.msg)
+						{
+							list += response.msg[i]+' , ';
+						}
+						
 						var successful = {
 							alertHidden: false,
 							customAlert: 'alert-success',
-							feedback: response.msg
+							feedback: list
 						};
 						return successful;
 					}

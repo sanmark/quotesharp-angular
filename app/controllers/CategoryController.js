@@ -1,4 +1,4 @@
-define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app, $) {
+define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'services/TreeViewFunctions'], function (app, $) {
 	app
 	.controller('CategoryController', [
 		'$scope',
@@ -6,17 +6,19 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 		'$compile',
 		'QuotesharpAPI',
 		'ResponseFunctions',
+		'TreeViewFunctions',
 		function (
 		$scope,
 		$location,
 		$compile,
 		QuotesharpAPI,
-		ResponseFunctions
+		ResponseFunctions,
+		TreeViewFunctions
 		) {
 			if (!localStorage.authenticated) {
 				$location.path('/login');
 			}
-			
+
 			getCategoriesForHtmlSelect();
 			getCategoriesForQuote();
 			$scope.responseAlert = {};
@@ -34,35 +36,8 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 				});
 			};
 
-			function buildCategory(parent, category)
-			{
-				var html = "";
-				if (typeof category['parent_cats'][parent] !== 'undefined')
-				{
-					html += "<ul>";
-					for (key in category['parent_cats'][parent])
-					{
-						var cat_id = category['parent_cats'][parent][key];
-
-						if (typeof category['parent_cats'][cat_id] === 'undefined')
-						{
-							html += "<li id='row_" + category['categories'][cat_id]['id'] + "'><a href='javascript:void(0)'><span>" + category['categories'][cat_id]['name'] + "</span></a><button class='editButton btn btn-warning' data-toggle='modal' data-target='#myModal_" + category['categories'][cat_id]['id'] + "'>Edit</button></li>";
-						}
-
-						if (typeof category['parent_cats'][cat_id] !== 'undefined')
-						{
-							html += "<li id='row_" + category['categories'][cat_id]['id'] + "'><a href='javascript:void(0)'><span>" + category['categories'][cat_id]['name'] + "</span></a>";
-							html += buildCategory(cat_id, category);
-							html += "<button class='editButton btn btn-warning' data-toggle='modal' data-target='#myModal_" + category['categories'][cat_id]['id'] + "'>Edit</button></li>";
-						}
-					}
-					html += "</ul>";
-				}
-				return html;
-			}
-
 			function getCategoriesForQuote() {
-				QuotesharpAPI.categories.getCategoriesForQuote()
+				QuotesharpAPI.categories.getCategoriesForTreeView()
 				.success(function (response) {
 					$scope.quoteCategories = response.data;
 					$scope.categories = response.data['categories'];
@@ -72,47 +47,15 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					}
 					else
 					{
-						var appendData = buildCategory(0, $scope.quoteCategories);
+						var appendData = TreeViewFunctions.buildTreeView(0, $scope.quoteCategories, true);
 						$('#quote-category-area').append($compile(appendData)($scope));
-						designQuoteView();
+						TreeViewFunctions.designTreeView();
 					}
 
 				})
-				.error(function (response) {
-					console.log(response.msg);
-				});
-			}
-
-			function designQuoteView()
-			{
-				$('#quote-category-area > ul > li ul').each(function (index, element) {
-					var content = '<span class="cnt glyphicon glyphicon-hand-down"></span>';
-					$(element).closest('li').children('a').append(content);
-				});
-
-				$('#quote-category-area > ul>li a').click(function () {
-
-					var checkElement = $(this).next();
-
-					$('#quote-category-area li').removeClass('active');
-					$(this).closest('li').addClass('active');
-
-					if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
-						$(this).closest('li').removeClass('active');
-						checkElement.slideUp('normal');
-					}
-					if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-						checkElement.slideDown('normal');
-					}
-
-					if ($(this).closest('li').find('ul').children().length === 0) {
-						return true;
-					} else {
-						return false;
-					}
+				.error(function () {
 
 				});
-
 			}
 
 			$scope.saveNewCategory = function (newCategoryName, newCategoryDetails, parentCategory) {
@@ -126,10 +69,10 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					$('#quote-category-area').empty();
 					getCategoriesForQuote();
 					getCategoriesForHtmlSelect();
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["'" + newCategoryName + "' Category Saved Successfully"]}, status);
 				})
 				.error(function (response, status) {
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Failed to save '" + newCategoryName + "'"]}, status);
 				});
 			};
 
@@ -139,10 +82,10 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					$('#quote-category-area').empty();
 					getCategoriesForQuote();
 					getCategoriesForHtmlSelect();
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["'" + categoryData.name + "' Updated Successfully"]}, status);
 				})
 				.error(function (response, status) {
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Failed to update '" + categoryData.name + "'"]}, status);
 				});
 
 			};
@@ -151,9 +94,10 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 				QuotesharpAPI.categories.getCategoriesForHtmlSelect()
 				.success(function (response) {
 					$scope.htmlCategories = response.data;
+					
 				})
 				.error(function (response) {
-					console.log(response.msg);
+
 				});
 			}
 
@@ -170,10 +114,10 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					$('#quote-category-area').empty();
 					getCategoriesForQuote();
 					getCategoriesForHtmlSelect();
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Category Deleted Successfully"]}, status);
 				})
 				.error(function (response, status) {
-					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Failed to delete category"]}, status);
 				});
 			};
 
