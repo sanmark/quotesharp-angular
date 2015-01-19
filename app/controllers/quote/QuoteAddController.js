@@ -1,4 +1,4 @@
-define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app, $) {
+define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'services/TreeViewFunctions'], function (app, $) {
 	app
 	.controller('QuoteAddController', [
 		'$scope',
@@ -7,13 +7,15 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 		'$compile',
 		'QuotesharpAPI',
 		'ResponseFunctions',
+		'TreeViewFunctions',
 		function (
 		$scope,
 		$state,
 		$location,
 		$compile,
 		QuotesharpAPI,
-		ResponseFunctions
+		ResponseFunctions,
+		TreeViewFunctions
 		) {
 			if (!localStorage.authenticated) {
 				$location.path('/login');
@@ -36,40 +38,13 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 				});
 			};
 
-			function buildCategory(parent, category)
-			{
-				var html = "";
-				if (typeof category['parent_cats'][parent] !== 'undefined')
-				{
-					html += "<ul>";
-					for (key in category['parent_cats'][parent])
-					{
-						var cat_id = category['parent_cats'][parent][key];
-
-						if (typeof category['parent_cats'][cat_id] === 'undefined')
-						{
-							html += "<li id='row_" + category['categories'][cat_id]['id'] + "'><a href='javascript:void(0)'><span>" + category['categories'][cat_id]['name'] + "</span></a></li>";
-						}
-
-						if (typeof category['parent_cats'][cat_id] !== 'undefined')
-						{
-							html += "<li id='row_" + category['categories'][cat_id]['id'] + "'><a href='javascript:void(0)'><span>" + category['categories'][cat_id]['name'] + "</span></a>";
-							html += buildCategory(cat_id, category);
-							html += "</li>";
-						}
-					}
-					html += "</ul>";
-				}
-				return html;
-			}
-
 			function getCategoriesForQuote() {
-				QuotesharpAPI.categories.getCategoriesForQuote()
+				QuotesharpAPI.categories.getCategoriesForTreeView()
 				.success(function (response) {
 					$scope.quoteCategories = response.data;
-					var appendData = buildCategory(0, $scope.quoteCategories);
+					var appendData = TreeViewFunctions.buildTreeView(0, $scope.quoteCategories);
 					$('#quote-category-area').append(appendData);
-					designQuoteView();
+					TreeViewFunctions.designTreeView();
 					getProductsAndServicesForQuote();
 				})
 				.error(function (response) {
@@ -145,7 +120,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 
 				if (result)
 				{
-					QuotesharpAPI.quote.save(sendData, $scope.customerName, $scope.customerTelephone, $scope.customerAddress,$scope.quoteId,$scope.dateTime)
+					QuotesharpAPI.quote.saveQuote(sendData, $scope.customerName, $scope.customerTelephone, $scope.customerAddress, $scope.quoteId, $scope.dateTime)
 					.success(function (response, status) {
 						$state.transitionTo('quote-view-all');
 					})
@@ -158,38 +133,6 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Please enter quote data"]}, 406);
 				}
 			};
-
-			function designQuoteView()
-			{
-				$('#quote-category-area > ul > li ul').each(function (index, element) {
-					var content = '<span class="cnt glyphicon glyphicon-hand-down"></span>';
-					$(element).closest('li').children('a').append(content);
-				});
-
-				$('#quote-category-area > ul>li a').click(function () {
-
-					var checkElement = $(this).next();
-
-					$('#quote-category-area li').removeClass('active');
-					$(this).closest('li').addClass('active');
-
-					if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
-						$(this).closest('li').removeClass('active');
-						checkElement.slideUp('normal');
-					}
-					if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-						checkElement.slideDown('normal');
-					}
-
-					if ($(this).closest('li').find('ul').children().length === 0) {
-						return true;
-					} else {
-						return false;
-					}
-
-				});
-
-			}
 
 			function validateAddQuoteOnSave(sendData)
 			{

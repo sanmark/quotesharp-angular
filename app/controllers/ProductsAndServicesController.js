@@ -34,7 +34,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 
 			function getProductsAndServices()
 			{
-				QuotesharpAPI.productsAndServices.get()
+				QuotesharpAPI.productsAndServices.getAllProductsAndServices()
 				.success(function (response) {
 					$scope.productsAndServices = response.data;
 				})
@@ -59,7 +59,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 				{
 					return false;
 				}
-				QuotesharpAPI.productsAndServices.save(newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent, newProductStatus)
+				QuotesharpAPI.productsAndServices.saveNewProductOrService(newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent, newProductStatus)
 				.success(function (response, status) {
 					clearNewProductInputs();
 					getCategoriesForHtmlSelect();
@@ -76,7 +76,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 				{
 					return false;
 				}
-				QuotesharpAPI.productsAndServices.update(productData)
+				QuotesharpAPI.productsAndServices.updateProductOrService(productData)
 				.success(function (response, status) {
 					getProductsAndServices();
 					getCategoriesForHtmlSelect();

@@ -57,9 +57,9 @@ define(['app'], function (app) {
 						}
 						);
 					},
-					getCategoriesForQuote: function () {
+					getCategoriesForTreeView: function () {
 						return $http.post(
-						apiUrlBase + 'categories/get-categories-for-quote',
+						apiUrlBase + 'categories/get-categories-for-tree-view',
 						{
 							authToken: localStorage.authToken
 						}
@@ -67,7 +67,7 @@ define(['app'], function (app) {
 					},
 					updateCategory: function (categoryData) {
 						return $http.post(
-						apiUrlBase + 'categories/update-categories',
+						apiUrlBase + 'categories/update-category',
 						{
 							authToken: localStorage.authToken,
 							updateData: categoryData
@@ -85,9 +85,9 @@ define(['app'], function (app) {
 					}
 				},
 				quote: {
-					save: function (sendData, customerName, customerTelephone, customerAddress, printedId, dateTime) {
+					saveQuote: function (sendData, customerName, customerTelephone, customerAddress, printedId, dateTime) {
 						return $http.post(
-						apiUrlBase + 'quote/save',
+						apiUrlBase + 'quote/save-quote',
 						{
 							authToken: localStorage.authToken,
 							quoteData: sendData,
@@ -107,9 +107,9 @@ define(['app'], function (app) {
 						}
 						);
 					},
-					update: function (editQuoteId, sendData, customerName, customerTelephone, customerAddress, printedId, dateTime) {
+					updateQuote: function (editQuoteId, sendData, customerName, customerTelephone, customerAddress, printedId, dateTime) {
 						return $http.post(
-						apiUrlBase + 'quote/update',
+						apiUrlBase + 'quote/update-quote',
 						{
 							authToken: localStorage.authToken,
 							edit_quote_id: editQuoteId,
@@ -160,9 +160,9 @@ define(['app'], function (app) {
 					}
 				},
 				productsAndServices: {
-					get: function () {
+					getAllProductsAndServices: function () {
 						return $http.post(
-						apiUrlBase + 'products-and-services/get',
+						apiUrlBase + 'products-and-services/get-all-products-and-services',
 						{
 							authToken: localStorage.authToken,
 						}
@@ -176,9 +176,9 @@ define(['app'], function (app) {
 						}
 						);
 					},
-					save: function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent, newProductStatus) {
+					saveNewProductOrService: function (newProductCode, newProductName, newProductPrice, newProductDetails, newProductParent, newProductStatus) {
 						return $http.post(
-						apiUrlBase + 'products-and-services/save',
+						apiUrlBase + 'products-and-services/save-new-product-or-service',
 						{
 							authToken: localStorage.authToken,
 							productCode: newProductCode,
@@ -190,9 +190,9 @@ define(['app'], function (app) {
 						}
 						);
 					},
-					update: function (updateData) {
+					updateProductOrService: function (updateData) {
 						return $http.post(
-						apiUrlBase + 'products-and-services/update',
+						apiUrlBase + 'products-and-services/update-product-or-service',
 						{
 							authToken: localStorage.authToken,
 							updateData: updateData
@@ -201,7 +201,7 @@ define(['app'], function (app) {
 					},
 					deleteProductOrService: function (productId) {
 						return $http.post(
-						apiUrlBase + 'products-and-services/delete-product',
+						apiUrlBase + 'products-and-services/delete-product-or-service',
 						{
 							authToken: localStorage.authToken,
 							productId: productId
