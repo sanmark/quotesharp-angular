@@ -16,6 +16,7 @@
 						<th>Customer Name</th>
 						<th>Customer Telephone</th>
 						<th>Customer Address</th>
+						<th>Quote Total</th>
 						<th></th>
 					</tr>
 					<tr data-ng-repeat="quote in quotes|filter:searchKey">
@@ -25,6 +26,7 @@
 						<td>{{quote.customer_name}}</td>
 						<td>{{quote.customer_telephone}}</td>
 						<td>{{quote.customer_address}}</td>
+						<td>{{quotesTotal[quote.id]}}</td>
 						<td style="text-align: center;">
 							<button data-ui-sref="quoteEdit({id:quote.id})" class="btn btn-warning">Edit</button>
 							<button data-toggle="modal" data-target="#prompt_{{quote.id}}" class="btn btn-danger">Delete</button>

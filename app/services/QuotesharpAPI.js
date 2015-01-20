@@ -99,6 +99,14 @@ define(['app'], function (app) {
 						}
 						);
 					},
+					getQuotesTotal: function () {
+						return $http.post(
+						apiUrlBase + 'quote/get-quotes-total',
+						{
+							authToken: localStorage.authToken
+						}
+						);
+					},
 					getCustomers: function () {
 						return $http.post(
 						apiUrlBase + 'quote/get-customers',
