@@ -41,6 +41,14 @@ define(['app', 'QuotesharpAPI', 'services/ResponseFunctions'], function (app) {
 				.error(function (response) {
 
 				});
+				QuotesharpAPI.quote.getQuotesTotal()
+				.success(function (response)
+				{
+					$scope.quotesTotal = response.data;
+				})
+				.error(function (response) {
+
+				});
 			}
 
 			$scope.deleteQuote = function (quoteId) {
