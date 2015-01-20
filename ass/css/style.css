@@ -197,4 +197,8 @@ body
 	background-color:transparent;
 	text-align: center;
 }
+label
+{
+	font-weight: normal !important;
+}
 
