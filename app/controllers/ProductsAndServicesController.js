@@ -34,6 +34,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions'], functio
 
 			function getProductsAndServices()
 			{
+				$scope.newProductStatus = true;
 				QuotesharpAPI.productsAndServices.getAllProductsAndServices()
 				.success(function (response) {
 					$scope.productsAndServices = response.data;
