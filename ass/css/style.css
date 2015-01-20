@@ -36,7 +36,7 @@
 #quote-category-area > ul > li > a > span {
 	padding: 10px;
 	display: block;
-	font-size: 13px;
+	font-size: 15px;
 	font-weight: 300;
 }
 #quote-category-area > ul > li > a:hover {
@@ -62,7 +62,7 @@
 #quote-category-area ul ul a {
 	padding: 10px;
 	display: block;
-	font-size: 13px;
+	font-size: 14px;
 }
 /*================Navigation=================*/
 
@@ -89,7 +89,7 @@
 	float: left;
 	position: relative;
 	line-height: 20px;
-	padding: 15px 20px;
+	padding: 22px 20px;
 	margin: 0 2px;
 	display: block;
 }
@@ -141,7 +141,7 @@
 }
 .search-field
 {
-	margin-top: -6px;
+	margin-top: -15px;
 }
 #fullTotal
 {
@@ -161,13 +161,18 @@
 }
 .login-input
 {
-	margin-top: 30%;
+	min-height:0px !important;
+}
+
+.login-input button
+{
+	width: 100%;
 }
 .editButton
 {
 	position: absolute;
 	right: 42px;
-	top: 4px;
+	top: 0px;
 	padding: 5px 5px 5px 5px;
 }
 .modal-dialog
@@ -182,3 +187,14 @@
 {
 	background-color: #f5f5f5;
 }
+body
+{
+	font-size: 15px !important;
+	line-height: 1 !important;
+}
+.alert-warning
+{
+	background-color:transparent;
+	text-align: center;
+}
+
