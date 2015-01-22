@@ -1,11 +1,12 @@
 define(['app'], function (app) {
 	app
 	.factory('QuotesharpAPI', [
-		'$http',
+		'$http','$rootScope',
 		function (
-		$http
+		$http,$rootScope
 		) {
-			apiUrlBase = 'http://api-quotesharp.sapps.io/';
+			$rootScope.currencyFormat="LKR ";
+			apiUrlBase = 'http://api.quotesharp.loc/';
 
 			return {
 				auth: {

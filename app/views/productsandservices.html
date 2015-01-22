@@ -61,7 +61,7 @@
 									<tr data-ng-repeat="productAndService in productsAndServices|filter:searchKey">
 										<td>{{productAndService.code}}</td>
 										<td>{{productAndService.name}}</td>
-										<td>{{productAndService.price}}</td>
+										<td>{{productAndService.price|currency:currencyFormat}}</td>
 										<td>{{productAndService.is_active==='1'?'Active':'Not Active'}}</td>
 										<td style="width: 105px;">
 											<button class="btn btn-warning"  data-toggle="modal" data-target="#productEditModal_{{productAndService.id}}">Edit</button>
