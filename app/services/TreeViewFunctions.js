@@ -51,7 +51,7 @@ define(['app'], function (app) {
 				designTreeView: function ()
 				{
 					$('#quote-category-area > ul > li ul').each(function (index, element) {
-						var content = '<span class="cnt glyphicon glyphicon-hand-down"></span>';
+						var content = '<span class="cnt glyphicon glyphicon-plus"></span>';
 						$(element).closest('li').children('a').append(content);
 					});
 
@@ -64,9 +64,14 @@ define(['app'], function (app) {
 
 						if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
 							$(this).closest('li').removeClass('active');
+							$(this).find(".cnt");
+							$(this).find(".cnt").removeClass('glyphicon-minus');
+							$(this).find(".cnt").addClass('glyphicon-plus');
 							checkElement.slideUp('normal');
 						}
 						if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+							$(this).find(".cnt").removeClass('glyphicon-plus');
+							$(this).find(".cnt").addClass('glyphicon-minus');
 							checkElement.slideDown('normal');
 						}
 

@@ -6,7 +6,7 @@ define(['app'], function (app) {
 		$http,$rootScope
 		) {
 			$rootScope.currencyFormat="LKR ";
-			apiUrlBase = 'http://api.quotesharp.loc/';
+			apiUrlBase = 'http://api-quotesharp.sapps.io/';
 
 			return {
 				auth: {
