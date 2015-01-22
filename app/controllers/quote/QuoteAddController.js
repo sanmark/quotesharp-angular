@@ -2,6 +2,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 	app
 	.controller('QuoteAddController', [
 		'$scope',
+		'$rootScope',
 		'$state',
 		'$location',
 		'$compile',
@@ -10,6 +11,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 		'TreeViewFunctions',
 		function (
 		$scope,
+		$rootScope,
 		$state,
 		$location,
 		$compile,
@@ -91,7 +93,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 							}
 							total += value;
 						}
-						$('#fullTotal').val(total);
+						$('#fullTotal').val($rootScope.currencyFormat+" "+total);
 					});
 				})
 				.error(function (response) {
