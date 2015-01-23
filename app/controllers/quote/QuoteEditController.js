@@ -154,7 +154,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 							}
 							total += value;
 						}
-						$('#fullTotal').val($rootScope.currencyFormat+" "+total);
+						$('#fullTotal').val($rootScope.currencyFormat + " " + total);
 					});
 				})
 				.error(function (response) {
@@ -175,7 +175,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 					}
 					total += Number(value);
 				}
-				$('#fullTotal').val($rootScope.currencyFormat+" "+total);
+				$('#fullTotal').val($rootScope.currencyFormat + " " + total);
 
 			}
 
@@ -184,20 +184,19 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 
 			$scope.updateQuote = function ()
 			{
+
 				var sendData = new Object();
 				for (i in $scope.quoteProductsIds)
 				{
-					if ($scope.quoteData['quantity_' + $scope.quoteProductsIds[i]] !== "")
-					{
-						sendData[$scope.quoteProductsIds[i]] = {
-							'id': $scope.quoteProductsIds[i],
-							'price': $scope.quoteData['price_' + $scope.quoteProductsIds[i]],
-							'quantity': $scope.quoteData['quantity_' + $scope.quoteProductsIds[i]]
-						};
-					}
+					sendData[$scope.quoteProductsIds[i]] = {
+						'id': $scope.quoteProductsIds[i],
+						'price': $scope.quoteData['price_' + $scope.quoteProductsIds[i]],
+						'quantity': $scope.quoteData['quantity_' + $scope.quoteProductsIds[i]]
+					};
 				}
+				
 				var result = validateEditQuoteOnUpdate(sendData);
-
+				
 				if (result)
 				{
 					QuotesharpAPI.quote.updateQuote($stateParams.id, sendData, $scope.customerName, $scope.customerTelephone, $scope.customerAddress, $scope.quoteId, $scope.dateTime)
