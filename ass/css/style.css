@@ -64,6 +64,10 @@
 	display: block;
 	font-size: 14px;
 }
+#quote-category-area input
+{
+	margin-left: 25px;
+}
 /*================Navigation=================*/
 
 .main-menu ul{
