@@ -69,7 +69,8 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 						html = "<li class='productRow'><span class='name'>" + productsAndServices[key]['name'] + "</span>";
 						html += "<input class='form-control' type='text' readonly data-ng-model='quoteData.price_" + productsAndServices[key]['id'] + "' id='proPrice_" + productsAndServices[key]['id'] + "' value='" + productsAndServices[key]['price'] + "'>";
 						html += "Quantity:<input class='form-control' id='" + productsAndServices[key]['id'] + "' data-ng-model='quoteData.quantity_" + productsAndServices[key]['id'] + "' type='text'>";
-						html += "Line total:<input class='form-control' id='proLineTotal_" + productsAndServices[key]['id'] + "' type='text' disabled></li>";
+						html += "Line total:<input class='form-control' id='proLineTotal_" + productsAndServices[key]['id'] + "' type='text' disabled>";
+						html+="<div class='treeViewButton'>Edit</div></li>";
 						var elementId = productsAndServices[key]['parent_id'];
 
 						$('#row_' + elementId).append($compile(html)($scope));

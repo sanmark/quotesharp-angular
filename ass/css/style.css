@@ -175,6 +175,16 @@
 	top: 0px;
 	padding: 5px 5px 5px 5px;
 }
+.treeViewButton
+{
+	position: absolute;
+	right: 42px;
+	top: 0px;
+	padding: 5px 5px 5px 5px;
+	width: 600px;
+	background-color: yellow;
+	height: 30px;
+}
 .modal-dialog
 {
 	width: 400px;
