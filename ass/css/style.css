@@ -19,7 +19,7 @@
 {
 	position:relative;
 	padding-left: 15px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 #quote-category-area {
 	width: 950px;
@@ -63,6 +63,10 @@
 	padding: 10px;
 	display: block;
 	font-size: 14px;
+}
+#quote-category-area input
+{
+	margin-left: 25px;
 }
 /*================Navigation=================*/
 
@@ -174,6 +178,14 @@
 	right: 42px;
 	top: 0px;
 	padding: 5px 5px 5px 5px;
+}
+.treeViewButton
+{
+	position: absolute;
+	right: 42px;
+	top: -15px;
+	width: 600px;
+	height: 30px;
 }
 .modal-dialog
 {

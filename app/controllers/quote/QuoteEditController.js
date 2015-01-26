@@ -127,9 +127,11 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 						$scope.quoteData[quantityId] = quantity;
 						var html = "";
 						html = "<li><span class='name'>" + productsAndServices[key]['name'] + "</span>";
+						html += "<div class='treeViewButton'>";
 						html += "<input class='form-control' type='text' readonly data-ng-model='quoteData.price_" + productsAndServices[key]['id'] + "' id='proPrice_" + productsAndServices[key]['id'] + "'>";
-						html += "Quantity:<input class='form-control' id='" + productsAndServices[key]['id'] + "' data-ng-model='quoteData.quantity_" + productsAndServices[key]['id'] + "' type='text'>";
-						html += "Line total:<input class='form-control' id='proLineTotal_" + productsAndServices[key]['id'] + "' type='text' value='" + lineTotal + "' disabled></li>";
+						html += "<input placeholder='Quantity' class='form-control' id='" + productsAndServices[key]['id'] + "' data-ng-model='quoteData.quantity_" + productsAndServices[key]['id'] + "' type='text'>";
+						html += "<input placeholder='Line total' class='form-control' id='proLineTotal_" + productsAndServices[key]['id'] + "' type='text' value='" + lineTotal + "' disabled>";
+						html += "</div></li>";
 						var elementId = productsAndServices[key]['parent_id'];
 						$('#row_' + elementId).append($compile(html)($scope));
 
