@@ -61,6 +61,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 			$scope.saveNewCategory = function (newCategoryName, newCategoryDetails, parentCategory) {
 				if (parentCategory === undefined || newCategoryName === undefined)
 				{
+					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Please fill input fields"]},406);
 					return false;
 				}
 				QuotesharpAPI.categories.saveNewCategory(newCategoryName, newCategoryDetails, parentCategory)
@@ -69,10 +70,10 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 					$('#quote-category-area').empty();
 					getCategoriesForQuote();
 					getCategoriesForHtmlSelect();
-					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["'" + newCategoryName + "' Category Saved Successfully"]}, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
 				})
 				.error(function (response, status) {
-					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Failed to save '" + newCategoryName + "'"]}, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
 				});
 			};
 
@@ -82,10 +83,10 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 					$('#quote-category-area').empty();
 					getCategoriesForQuote();
 					getCategoriesForHtmlSelect();
-					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["'" + categoryData.name + "' Updated Successfully"]}, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
 				})
 				.error(function (response, status) {
-					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Failed to update '" + categoryData.name + "'"]}, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
 				});
 
 			};
@@ -114,7 +115,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 					$('#quote-category-area').empty();
 					getCategoriesForQuote();
 					getCategoriesForHtmlSelect();
-					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Category Deleted Successfully"]}, status);
+					$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
 				})
 				.error(function (response, status) {
 					$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Failed to delete category"]}, status);

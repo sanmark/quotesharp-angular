@@ -21,11 +21,12 @@ define(['app'], function (app) {
 					}
 					else
 					{
-						var list = "";
+						var list = "<ul>";
 						for (i in response.msg)
 						{
-							list += response.msg[i]+' , ';
+							list += "<li>"+response.msg[i]+"</li>";
 						}
+						list+="</ul>";
 
 						var unsuccessful = {
 							alertHidden: false,
