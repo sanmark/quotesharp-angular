@@ -129,7 +129,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 						$state.transitionTo('quote-view-all');
 					})
 					.error(function (response, status) {
-						$scope.responseAlert = ResponseFunctions.displayFeedback({"msg": ["Failed to save quote"]}, status);
+						$scope.responseAlert = ResponseFunctions.displayFeedback(response, status);
 					});
 				}
 				else
