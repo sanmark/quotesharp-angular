@@ -19,7 +19,6 @@
 			</div>
 		</nav>
 	</div>
-	<div class="alert" ng-class="responseAlert.customAlert" ng-hide="responseAlert.alertHidden">
-		{{responseAlert.feedback}}
+	<div class="alert" ng-class="responseAlert.customAlert" ng-hide="responseAlert.alertHidden" data-ng-bind-html="responseAlert.feedback">
 	</div>
 </div>
