@@ -1,11 +1,11 @@
 define(['app'], function (app) {
 	app
 	.factory('QuotesharpAPI', [
-		'$http','$rootScope',
+		'$http', '$rootScope',
 		function (
-		$http,$rootScope
+		$http, $rootScope
 		) {
-			$rootScope.currencyFormat="LKR ";
+			$rootScope.currencyFormat = "LKR ";
 			apiUrlBase = 'http://api.quotesharp.loc/';
 
 			return {
@@ -204,7 +204,13 @@ define(['app'], function (app) {
 						apiUrlBase + 'products-and-services/update-product-or-service',
 						{
 							authToken: localStorage.authToken,
-							updateData: updateData
+							productId: updateData.id,
+							productCode: updateData.code,
+							productName: updateData.name,
+							productPrice: updateData.price,
+							productDetails: updateData.details,
+							productParent: updateData.parent_id,
+							productStatus: updateData.is_active
 						}
 						);
 					},
