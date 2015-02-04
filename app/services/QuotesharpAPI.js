@@ -221,6 +221,15 @@ define(['app'], function (app) {
 							productId: productId
 						}
 						);
+					},
+					getAllProductsAndServicesForEditMode:function (editQuoteId) {
+						return $http.post(
+						apiUrlBase + 'products-and-services/get-all-products-and-services-for-edit-mode',
+						{
+							authToken: localStorage.authToken,
+							quote_id: editQuoteId
+						}
+						);
 					}
 
 				}

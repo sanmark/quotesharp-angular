@@ -88,7 +88,7 @@ define(['app', 'jquery', 'QuotesharpAPI', 'services/ResponseFunctions', 'service
 				});
 			}
 			function getProductsAndServicesForQuote() {
-				QuotesharpAPI.productsAndServices.getAllProductsAndServices()
+				QuotesharpAPI.productsAndServices.getAllProductsAndServicesForEditMode(editQuoteId)
 				.success(function (response) {
 					$scope.quoteProductsAndServices = response.data;
 					var productsAndServices = $scope.quoteProductsAndServices;
